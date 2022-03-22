@@ -17,8 +17,6 @@ export class Installer {
       core.info('Install JetBrains.ReSharper.GlobalTools.')
     }
 
-    return exec.exec(
-      `dotnet tool install -g JetBrains.ReSharper.GlobalTools --version ${version}`
-    )
+    return 0
   }
 }
