@@ -113,7 +113,7 @@ function run() {
             const cwd = process.cwd();
             const solutionPath = path_1.default.join(cwd, core.getInput('solutionPath'));
             const outputPath = path_1.default.join(cwd, 'result.xml');
-            let command = `jb inspectcode -o=${outputPath} -a ${solutionPath} --build`;
+            let command = `~/.dotnet/tools/jb inspectcode -o=${outputPath} -a ${solutionPath} --build --verbosity=WARN`;
             const exclude = (_a = core.getInput('exclude')) !== null && _a !== void 0 ? _a : '';
             if (exclude !== '') {
                 command += ` --exclude=${exclude}`;
