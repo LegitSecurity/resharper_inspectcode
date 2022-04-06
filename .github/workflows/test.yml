@@ -1,38 +1,8 @@
-name: 'build-test'
-on: # rebuild any PRs and main branch changes
-  pull_request:
-  push:
-    branches:
-      - main
-      - 'releases/*'
+name: 'check'
+on: pull_request
 
 jobs:
   build: # make sure build/ci work properly
-    runs-on: ubuntu-latest
+    runs-on: integrations
     steps:
-      - uses: actions/checkout@v2
-      - run: |
-          npm install
-      - run: |
-          npm run all
-  test: # make sure the action works on a clean machine without building
-    runs-on: ${{ matrix.operating-system }}
-    strategy:
-      fail-fast: false
-      matrix:
-        operating-system: [ ubuntu-latest, windows-latest, macOS-latest ]
-        dotnet-version: [ '3.1', '5.0', '6.0' ]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: ${{ matrix.dotnet-version }}
-      - uses: ./
-        with:
-          solutionPath: TestSolution/TestSolution.sln
-          failOnIssue: '0'
-      # Reproduce second time execution on self-hosted runner
-      - uses: ./
-        with:
-          solutionPath: TestSolution/TestSolution.sln
-          failOnIssue: '0'
+      - run: echo 'running on hosted runner'
