@@ -2,7 +2,28 @@ name: 'check'
 on: pull_request
 
 jobs:
-  build: # make sure build/ci work properly
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -H "Accept: application/vnd.github.v3+json" -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/LegitSecurity/resharper_inspectcode/actions/runners
+  integrations:
     runs-on: integrations
+    steps:
+      - run: echo 'running on hosted runner'
+  periodic-runner-1:
+    runs-on: periodic-runner-1
+    steps:
+      - run: echo 'running on hosted runner'
+  periodic-runner-2:
+    runs-on: periodic-runner-2
+    steps:
+      - run: echo 'running on hosted runner'
+  stateful-tests:
+    runs-on: stateful-tests
+    steps:
+      - run: echo 'running on hosted runner'
+  resharper:
+    runs-on: resharper
     steps:
       - run: echo 'running on hosted runner'
