@@ -24,7 +24,6 @@ async function run(): Promise<void> {
     }
 
     const cachesHome = core.getInput('cachesHome') ?? ''
-    console.log('xxx', cachesHome)
     if (cachesHome !== '') {
       command += ` --caches-home=${cachesHome}`
     }

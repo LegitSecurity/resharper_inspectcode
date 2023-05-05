@@ -137,7 +137,7 @@ const installer_1 = __nccwpck_require__(1480);
 const report_1 = __nccwpck_require__(8269);
 const path_1 = __importDefault(__nccwpck_require__(1017));
 function run() {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const installer = new installer_1.Installer();
@@ -152,12 +152,16 @@ function run() {
             if (exclude !== '') {
                 command += ` --exclude=${exclude}`;
             }
+            const cachesHome = (_c = core.getInput('cachesHome')) !== null && _c !== void 0 ? _c : '';
+            if (cachesHome !== '') {
+                command += ` --caches-home=${cachesHome}`;
+            }
             yield exec.exec(command);
-            const ignoreIssueType = (_c = core.getInput('ignoreIssueType')) !== null && _c !== void 0 ? _c : '';
+            const ignoreIssueType = (_d = core.getInput('ignoreIssueType')) !== null && _d !== void 0 ? _d : '';
             const report = new report_1.Report(outputPath, ignoreIssueType);
             report.output();
             const failOnIssue = core.getInput('failOnIssue');
-            const minimumSeverity = (_d = core.getInput('minimumSeverity')) !== null && _d !== void 0 ? _d : 'notice';
+            const minimumSeverity = (_e = core.getInput('minimumSeverity')) !== null && _e !== void 0 ? _e : 'notice';
             if (failOnIssue !== '1') {
                 return;
             }
