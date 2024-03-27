@@ -115,6 +115,9 @@ export class Report {
 
   output(): void {
     for (const issue of this.issues) {
+      if (issue.Severity === 'notice') {
+        continue;
+      }
       const properties: {[key: string]: string | number} = {}
 
       properties['file'] = issue.FilePath
