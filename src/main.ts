@@ -18,6 +18,12 @@ async function run(): Promise<void> {
 
     let command = `${executablePath} inspectcode -o=${outputPath} -a ${solutionPath} --build --verbosity=WARN`
 
+    const cachesHome = core.getInput('cachesHome');
+    if (cachesHome !== '')
+    {
+        command += ` --caches-home=${cachesHome}`;
+    }
+    
     const exclude = core.getInput('exclude') ?? ''
     if (exclude !== '') {
       command += ` --exclude=${exclude}`
