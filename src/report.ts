@@ -115,23 +115,29 @@ export class Report {
 
   output(): void {
     for (const issue of this.issues) {
-      const properties: {[key: string]: string | number} = {}
-
-      properties['file'] = issue.FilePath
-      if (issue.Line) {
-        properties['line'] = issue.Line
-        properties['col'] = issue.Column
+      if (issue.Severity === 'notice') {
+        continue; // Skip the issue if it's a notice
       }
 
-      issueCommand(issue.Severity, properties, issue.output())
+      const properties: {[key: string]: string | number} = {};
+      properties['file'] = issue.FilePath;
+      if (issue.Line) {
+        properties['line'] = issue.Line;
+        properties['col'] = issue.Column;
+      }
+
+      // Issue command for non-notice issues
+      issueCommand(issue.Severity, properties, issue.output());
     }
   }
 
-  issueOverThresholdIsExists(minimumSeverity: string): boolean {
-    const errorTarget = this.switchErrorTarget(minimumSeverity)
 
-    return this.issues.filter(i => errorTarget.includes(i.Severity)).length > 0
-  }
+  issueOverThresholdIsExists(minimumSeverity: string): boolean {
+  const errorTarget = this.switchErrorTarget(minimumSeverity);
+  return this.issues.some(i => i.Severity !== 'notice' && errorTarget.indexOf(i.Severity) !== -1);
+}
+
+
 
   private switchErrorTarget(minimumSeverity: string): Severity[] {
     if (minimumSeverity === 'error') {
@@ -140,6 +146,11 @@ export class Report {
     if (minimumSeverity === 'warning') {
       return ['warning', 'error']
     }
-    return ['notice', 'warning', 'error']
-  }
+    if (minimumSeverity === 'notice') {
+      return ['notice', 'warning', 'error']
+    }
+    return ['warning', 'error']
 }
+
+}
+
