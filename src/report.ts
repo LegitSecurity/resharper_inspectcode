@@ -115,9 +115,6 @@ export class Report {
 
   output(): void {
     for (const issue of this.issues) {
-      if (issue.Severity === 'notice') {
-        continue;
-      }
       const properties: {[key: string]: string | number} = {}
 
       properties['file'] = issue.FilePath
@@ -138,11 +135,16 @@ export class Report {
 
   private switchErrorTarget(minimumSeverity: string): Severity[] {
     if (minimumSeverity === 'error') {
-      return ['error']
+      return ['error'];
     }
     if (minimumSeverity === 'warning') {
-      return ['warning', 'error']
+      return ['warning', 'error'];
     }
-    return ['notice', 'warning', 'error']
-  }
+    if (minimumSeverity === 'notice') {
+      return ['notice', 'warning', 'error'];
+    }
+    return ['warning', 'error']; 
 }
+
+}
+
