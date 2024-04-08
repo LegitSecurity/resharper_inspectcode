@@ -135,15 +135,15 @@ export class Report {
 
   private switchErrorTarget(minimumSeverity: string): Severity[] {
     if (minimumSeverity === 'error') {
-      return ['error'];
+      return ['error']
     }
     if (minimumSeverity === 'warning') {
-      return ['warning', 'error'];
+      return ['warning', 'error']
     }
     if (minimumSeverity === 'notice') {
-      return ['notice', 'warning', 'error'];
+      return ['notice', 'warning', 'error']
     }
-    return ['warning', 'error']; 
+    return ['warning', 'error']
 }
 
 }
